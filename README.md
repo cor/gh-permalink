@@ -4,7 +4,7 @@ A simple Rust application to generate GitHub permalinks for files in a git repos
 I use it with [Helix](https://helix-editor.com/) like this:
 
 ```
-:sh gh-permalink %{filename:repo_rel} %{linenumber}
+:sh gh-permalink %{filename:repo_rel} %{linenumber} --lines '%{selection}' --lang %{lang} | pbcopy
 ```
 
 Using the [command expansion v2 PR](https://github.com/helix-editor/helix/pull/11164)
