@@ -9,6 +9,8 @@ use serde_json::Value;
 struct Cli {
     /// Path to the file within the repository
     file_path: String,
+    /// Optional line number to include in the permalink
+    line_number: Option<u32>,
 }
 
 fn main() {
@@ -92,6 +94,13 @@ fn main() {
     };
 
     // Construct the permalink with the commit hash
-    println!("{}/blob/{}/{}", repo_url, commit_hash, relative_path.display());
+    let mut permalink = format!("{}/blob/{}/{}", repo_url, commit_hash, relative_path.display());
+
+    // Append the line number if provided
+    if let Some(line_number) = args.line_number {
+        permalink.push_str(&format!("#L{}", line_number));
+    }
+
+    println!("{}", permalink);
 }
 
