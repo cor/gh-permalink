@@ -14,6 +14,9 @@ struct Cli {
     /// Optional lines of text to include in the output
     #[clap(long)]
     lines: Option<String>,
+    /// Optional language for syntax highlighting (only valid if --lines is passed)
+    #[clap(long)]
+    lang: Option<String>,
 }
 
 fn main() {
@@ -106,7 +109,11 @@ fn main() {
 
     // Print the lines of text if provided
     if let Some(lines) = args.lines {
-        println!("```\n{}\n```\n{}", lines, permalink);
+        if let Some(lang) = args.lang {
+            println!("\n```{}\n{}\n```\n{}", lang, lines, permalink);
+        } else {
+            println!("\n```\n{}\n```\n{}", lines, permalink);
+        }
     } else {
         println!("{}", permalink);
     }
