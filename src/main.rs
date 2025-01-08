@@ -11,6 +11,9 @@ struct Cli {
     file_path: String,
     /// Optional line number to include in the permalink
     line_number: Option<u32>,
+    /// Optional lines of text to include in the output
+    #[clap(long)]
+    lines: Option<String>,
 }
 
 fn main() {
@@ -101,6 +104,11 @@ fn main() {
         permalink.push_str(&format!("#L{}", line_number));
     }
 
-    println!("{}", permalink);
+    // Print the lines of text if provided
+    if let Some(lines) = args.lines {
+        println!("```\n{}\n```\n{}", lines, permalink);
+    } else {
+        println!("{}", permalink);
+    }
 }
 
